@@ -1,0 +1,14 @@
+{
+  "wireMagic": "pb3",
+  "pens": [{}],
+  "wsWinStyles": [{}],
+  "wpWinPositions": [{}],
+  "events": [
+    { "tStartMs": 1200, "dDurationMs": 2400, "segs": [{ "utf8": "Welcome to the  workshop." }] },
+    { "tStartMs": 4000, "dDurationMs": 3000, "segs": [{ "utf8": "Today we build\na bird feeder." }] },
+    { "tStartMs": 7500, "dDurationMs": 1000, "segs": [{ "utf8": "\n" }] },
+    { "tStartMs": 6500, "dDurationMs": 2000, "segs": [{ "utf8": "Tools & <safety> first" }, { "utf8": "​" }] },
+    { "tStartMs": 9000, "segs": [{ "utf8": "No duration here" }] },
+    { "tStartMs": 12000, "dDurationMs": 1500, "segs": [{ "utf8": "Thanks for watching." }] }
+  ]
+}

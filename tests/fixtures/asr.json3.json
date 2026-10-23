@@ -1,0 +1,43 @@
+{
+  "wireMagic": "pb3",
+  "pens": [{}],
+  "wsWinStyles": [{}, { "mhModeHint": 2, "juJustifCode": 0, "sdScrollDir": 3 }],
+  "wpWinPositions": [{}, { "apPoint": 6, "ahHorPos": 20, "avVerPos": 100, "rcRows": 2, "ccCols": 40 }],
+  "events": [
+    { "tStartMs": 0, "dDurationMs": 30000, "id": 1, "wpWinPosId": 1, "wsWinStyleId": 1 },
+    {
+      "tStartMs": 400,
+      "dDurationMs": 5200,
+      "wWinId": 1,
+      "segs": [
+        { "utf8": "so", "acAsrConf": 0 },
+        { "utf8": " the", "tOffsetMs": 240, "acAsrConf": 0 },
+        { "utf8": " first", "tOffsetMs": 560, "acAsrConf": 0 },
+        { "utf8": " step", "tOffsetMs": 900, "acAsrConf": 0 }
+      ]
+    },
+    { "tStartMs": 2900, "dDurationMs": 2700, "wWinId": 1, "aAppend": 1, "segs": [{ "utf8": "\n" }] },
+    {
+      "tStartMs": 2910,
+      "dDurationMs": 6100,
+      "wWinId": 1,
+      "segs": [
+        { "utf8": "is", "acAsrConf": 0 },
+        { "utf8": " measuring", "tOffsetMs": 300, "acAsrConf": 0 },
+        { "utf8": " the", "tOffsetMs": 820, "acAsrConf": 0 },
+        { "utf8": " wood", "tOffsetMs": 1100, "acAsrConf": 0 }
+      ]
+    },
+    { "tStartMs": 5600, "dDurationMs": 3410, "wWinId": 1, "aAppend": 1, "segs": [{ "utf8": "\n" }] },
+    {
+      "tStartMs": 5610,
+      "dDurationMs": 4000,
+      "wWinId": 1,
+      "segs": [
+        { "utf8": "twice", "acAsrConf": 0 },
+        { "utf8": " before", "tOffsetMs": 400, "acAsrConf": 0 },
+        { "utf8": " cutting", "tOffsetMs": 800, "acAsrConf": 0 }
+      ]
+    }
+  ]
+}

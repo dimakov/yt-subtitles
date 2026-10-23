@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Subtitle Downloader</title>
+    <link rel="stylesheet" href="popup.css" />
+    <script type="module" src="popup.js"></script>
+  </head>
+  <body>
+    <header class="bar">
+      <img src="../icons/icon32.png" alt="" width="20" height="20" />
+      <h1>Subtitle Downloader</h1>
+    </header>
+
+    <main>
+      <p id="message" class="message" role="status">Loading…</p>
+
+      <form id="video" hidden>
+        <div class="video-card">
+          <p id="video-title" class="video-title"></p>
+          <p id="video-meta" class="video-meta"></p>
+        </div>
+
+        <label class="field">
+          <span class="field-label">Subtitles</span>
+          <select id="track"></select>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Translate to</span>
+          <select id="translate">
+            <option value="">Original language</option>
+          </select>
+        </label>
+
+        <fieldset class="field">
+          <legend class="field-label">Format</legend>
+          <div class="segmented" id="formats"></div>
+        </fieldset>
+
+        <label class="check" id="timestamps-row">
+          <input type="checkbox" id="timestamps" />
+          <span>Include timestamps</span>
+        </label>
+
+        <div class="actions">
+          <button type="submit" id="download" class="primary">Download</button>
+          <button type="button" id="copy">Copy</button>
+        </div>
+
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </form>
+    </main>
+  </body>
+</html>

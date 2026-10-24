@@ -78,6 +78,20 @@ docs/hld/             design documentation
   for the Edge Add-ons store. It never overwrites an existing archive, so bump
   `version` in `extension/manifest.json` for each release.
 
+## Publishing
+
+- [store/edge-listing.md](store/edge-listing.md) has every field to paste into
+  Microsoft Partner Center: privacy answers, permission justifications,
+  description, search terms and certification notes.
+- [PRIVACY.md](PRIVACY.md) is the privacy policy the listing links to.
+- `store/images/` holds the logo (300 × 300), promotional tiles (440 × 280,
+  1400 × 560) and screenshots (1280 × 800).
+  - Regenerate the logo with `npm run icons`.
+  - Regenerate the rest with `node scripts/capture_store_images.mjs`, using
+    Windows Node 22+ with Edge installed. It renders the real popup with the
+    invented demo data in `store/src/`, in a throwaway headless Edge profile
+    with sync turned off.
+
 ## Limitations
 
 - Videos that need sign-in (age-restricted, members-only, private) work only

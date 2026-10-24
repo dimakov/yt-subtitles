@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Store image</title>
+    <!--
+      Lays out one store image (?image=<name>) around the real popup, which runs
+      in an iframe with store/src/mock-chrome.js providing demo data. Rendered
+      and captured by scripts/capture_store_images.mjs; never packaged.
+    -->
+    <style>
+      :root {
+        --bg-a: #eef1fc;
+        --bg-b: #d6defa;
+        --ink: #151a2e;
+        --muted: #4b5470;
+        --accent: #3451d1;
+        --code-bg: #141935;
+        --code-ink: #dfe4ff;
+        --code-dim: #8f9bd6;
+        --tile-a: #3451d1;
+        --tile-b: #1b2675;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-a: #131624;
+          --bg-b: #262d4c;
+          --ink: #eef0f8;
+          --muted: #a9b1ca;
+          --accent: #8a9dff;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      body {
+        background: linear-gradient(135deg, var(--bg-a), var(--bg-b));
+        color: var(--ink);
+        font-family: "Segoe UI", system-ui, sans-serif;
+      }
+
+      .stage {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 56px;
+        height: 100%;
+        padding: 0 96px;
+      }
+
+      .copy {
+        max-width: 580px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 34px;
+        color: var(--muted);
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .brand img {
+        width: 36px;
+        height: 36px;
+      }
+
+      h1 {
+        margin: 0 0 18px;
+        font-size: 54px;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+      }
+
+      .lead {
+        margin: 0;
+        color: var(--muted);
+        font-size: 23px;
+        line-height: 1.45;
+      }
+
+      .points {
+        margin: 30px 0 0;
+        padding: 0;
+        list-style: none;
+        font-size: 20px;
+        line-height: 1.4;
+      }
+
+      .points li {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 12px;
+      }
+
+      .points li::before {
+        content: "";
+        flex: 0 0 10px;
+        height: 10px;
+        margin-top: 10px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      .sample {
+        margin: 26px 0 0;
+        padding: 16px 22px;
+        border-radius: 12px;
+        background: var(--code-bg);
+        color: var(--code-ink);
+        font: 16px/1.5 Consolas, "Cascadia Mono", monospace;
+        white-space: pre-wrap;
+      }
+
+      .sample .file {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--code-dim);
+      }
+
+      .device {
+        flex: none;
+        overflow: hidden;
+        border-radius: 14px;
+        box-shadow:
+          0 30px 70px rgba(16, 24, 72, 0.3),
+          0 4px 14px rgba(16, 24, 72, 0.14);
+      }
+
+      .device iframe {
+        display: block;
+        width: 340px;
+        border: 0;
+        transform-origin: 0 0;
+      }
+
+      /* Promotional tiles */
+      .tile {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        background: linear-gradient(135deg, var(--tile-a), var(--tile-b));
+        color: #ffffff;
+      }
+
+      .tile .logo {
+        border-radius: 22%;
+        box-shadow:
+          0 0 0 3px rgba(255, 255, 255, 0.9),
+          0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .tile .name {
+        margin: 0;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        line-height: 1.05;
+      }
+
+      .tile .for {
+        margin: 6px 0 0;
+        opacity: 0.85;
+        font-weight: 600;
+      }
+
+      .tile .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 18px;
+      }
+
+      .tile .chips span {
+        padding: 4px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.16);
+        font-weight: 600;
+      }
+
+      .tile.small {
+        flex-direction: column;
+        justify-content: center;
+        gap: 16px;
+        text-align: center;
+      }
+
+      .tile.small .logo {
+        width: 76px;
+        height: 76px;
+      }
+
+      .tile.small .name {
+        font-size: 31px;
+      }
+
+      .tile.small .for {
+        font-size: 18px;
+      }
+
+      .tile.small .chips {
+        justify-content: center;
+        margin-top: 0;
+        font-size: 14px;
+      }
+
+      .tile.large {
+        justify-content: space-between;
+        padding: 0 110px;
+      }
+
+      .tile.large .logo {
+        width: 104px;
+        height: 104px;
+        margin-bottom: 30px;
+      }
+
+      .tile.large .name {
+        font-size: 64px;
+      }
+
+      .tile.large .for {
+        font-size: 30px;
+      }
+
+      .tile.large .tagline {
+        max-width: 640px;
+        margin: 22px 0 0;
+        opacity: 0.9;
+        font-size: 24px;
+        line-height: 1.4;
+      }
+
+      .tile.large .chips {
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import { parseJson3 } from '/extension/lib/captions.js';
+      import { toSrt } from '/extension/lib/formats.js';
+
+      const ICON = '/extension/icons/icon128.png';
+      const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      async function until(check, timeoutMs = 10000) {
+        const deadline = Date.now() + timeoutMs;
+        while (!check()) {
+          if (Date.now() > deadline) throw new Error('timed out waiting for the popup');
+          await sleep(50);
+        }
+      }
+
+      const el = (tag, props = {}, ...children) => {
+        const node = Object.assign(document.createElement(tag), props);
+        node.append(...children);
+        return node;
+      };
+
+      /**
+       * Renders the real popup with demo data into `device` (already in the
+       * layout: moving an iframe reloads it), runs the scenario and scales it.
+       */
+      async function popup(device, { scale, track, translate = '', format, timestamps = false, press = 'download' }) {
+        const html = await (await fetch('/extension/popup/popup.html')).text();
+        const frame = el('iframe');
+        frame.srcdoc = html
+          .replace('<head>', '<head><base href="/extension/popup/" />')
+          // "<\/script>" must stay escaped: a literal one would end this inline script.
+          .replace('<script type="module"', '<script src="/store/src/mock-chrome.js"><\/script><script type="module"');
+        const loaded = new Promise((resolve) => frame.addEventListener('load', resolve, { once: true }));
+        device.append(frame);
+        await loaded;
+
+        const doc = frame.contentDocument;
+        await until(() => !doc.getElementById('video').hidden);
+        const set = (node, prop, value) => {
+          node[prop] = value;
+          node.dispatchEvent(new Event('change', { bubbles: true }));
+        };
+        set(doc.getElementById('track'), 'value', String(track));
+        set(doc.getElementById('translate'), 'value', translate);
+        set(doc.querySelector(`input[name="format"][value="${format}"]`), 'checked', true);
+        set(doc.getElementById('timestamps'), 'checked', timestamps);
+        doc.getElementById(press).click();
+        await until(() => /success|error/.test(doc.getElementById('status').className));
+        await sleep(100);
+
+        const height = doc.documentElement.scrollHeight;
+        frame.style.height = `${height}px`;
+        frame.style.transform = `scale(${scale})`;
+        device.style.width = `${340 * scale}px`;
+        device.style.height = `${height * scale}px`;
+        return frame.contentWindow.__demoJson3;
+      }
+
+      function brand() {
+        return el('div', { className: 'brand' }, el('img', { src: ICON, alt: '' }), 'Subtitle Downloader for YouTube');
+      }
+
+      /** Headline column plus an empty device slot; returns both for filling in. */
+      function screenshot({ title, lead, points = [] }) {
+        const copy = el(
+          'div',
+          { className: 'copy' },
+          brand(),
+          el('h1', { textContent: title }),
+          el('p', { className: 'lead', textContent: lead }),
+          ...(points.length ? [el('ul', { className: 'points' }, ...points.map((p) => el('li', { textContent: p })))] : []),
+        );
+        const device = el('div', { className: 'device' });
+        document.body.append(el('div', { className: 'stage' }, copy, device));
+        return { copy, device };
+      }
+
+      const chips = () => el('div', { className: 'chips' }, ...['SRT', 'VTT', 'TXT', 'JSON'].map((f) => el('span', { textContent: f })));
+
+      const IMAGES = {
+        async 'screenshot-1-download'() {
+          const { device } = screenshot({
+            title: 'Download YouTube subtitles in one click',
+            lead: 'Pick any subtitle track, uploaded or auto-generated, and save it as a file.',
+            points: ['Every language the video offers', 'SRT, VTT, plain text or JSON', 'No account, no tracking'],
+          });
+          await popup(device, { scale: 1.55, track: 0, format: 'srt' });
+        },
+        async 'screenshot-2-translate'() {
+          const { device } = screenshot({
+            title: 'Translate subtitles into other languages',
+            lead: "Use YouTube's built-in auto-translation, then save the result in any format.",
+            points: ['Works with auto-generated captions too', 'Plain text with optional [m:ss] timestamps', 'Remembers your last choices'],
+          });
+          await popup(device, { scale: 1.55, track: 1, translate: 'de', format: 'txt', timestamps: true });
+        },
+        async 'screenshot-3-formats'() {
+          const { copy, device } = screenshot({
+            title: 'Ready for players, editors and notes',
+            lead: 'Files are named so VLC and mpv find them next to a downloaded video.',
+          });
+          const demo = await popup(device, { scale: 1.55, track: 0, format: 'srt' });
+          const srt = toSrt(parseJson3(demo).slice(0, 3)).trimEnd();
+          copy.append(
+            el(
+              'pre',
+              { className: 'sample' },
+              el('span', { className: 'file', textContent: 'Build a Backyard Bird Feeder… [Bf9xK2mQp1A].en.srt' }),
+              srt,
+            ),
+          );
+        },
+        async 'screenshot-4-dark'() {
+          const { device } = screenshot({
+            title: 'Copy straight to the clipboard',
+            lead: 'Paste a transcript into notes, documents or a chat.',
+            points: ['Light and dark themes', 'Clean, non-overlapping auto-captions', 'Talks only to youtube.com'],
+          });
+          await popup(device, { scale: 1.55, track: 2, format: 'vtt', press: 'copy' });
+        },
+        async 'promo-small-440x280'() {
+          document.body.append(
+            el(
+              'div',
+              { className: 'tile small' },
+              el('img', { className: 'logo', src: ICON, alt: '' }),
+              el('div', {}, el('p', { className: 'name', textContent: 'Subtitle Downloader' }), el('p', { className: 'for', textContent: 'for YouTube' })),
+              chips(),
+            ),
+          );
+        },
+        async 'promo-large-1400x560'() {
+          const device = el('div', { className: 'device' });
+          document.body.append(
+            el(
+              'div',
+              { className: 'tile large' },
+              el(
+                'div',
+                {},
+                el('img', { className: 'logo', src: ICON, alt: '' }),
+                el('p', { className: 'name', textContent: 'Subtitle Downloader' }),
+                el('p', { className: 'for', textContent: 'for YouTube' }),
+                el('p', {
+                  className: 'tagline',
+                  textContent: 'Save subtitles and auto-generated captions in one click, with auto-translation.',
+                }),
+                chips(),
+              ),
+              device,
+            ),
+          );
+          await popup(device, { scale: 1.08, track: 0, format: 'srt' });
+        },
+      };
+
+      const name = new URLSearchParams(location.search).get('image');
+      try {
+        if (!IMAGES[name]) throw new Error(`unknown image ${name}`);
+        await IMAGES[name]();
+        await document.fonts.ready;
+        await Promise.all([...document.images].map((img) => img.decode().catch(() => {})));
+        document.body.dataset.ready = 'done';
+      } catch (error) {
+        document.body.dataset.ready = `error: ${error.message}`;
+      }
+    </script>
+  </body>
+</html>

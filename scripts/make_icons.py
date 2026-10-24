@@ -1,4 +1,5 @@
-"""Draws the extension icons (extension/icons/icon{16,32,48,128}.png).
+"""Draws the extension icons (extension/icons/icon{16,32,48,128}.png) and the
+300 x 300 store logo (store/images/logo-300.png).
 
 The artwork is a rounded indigo tile with a download arrow above two caption
 bars. Each size is rendered at 8x and downscaled for clean anti-aliasing.
@@ -14,7 +15,9 @@ SIZES = (16, 32, 48, 128)
 SCALE = 8
 TILE = (52, 81, 209, 255)
 INK = (255, 255, 255, 255)
-OUT_DIR = Path(__file__).resolve().parent.parent / "extension" / "icons"
+ROOT = Path(__file__).resolve().parent.parent
+OUT_DIR = ROOT / "extension" / "icons"
+STORE_LOGO = ROOT / "store" / "images" / "logo-300.png"
 
 
 def draw(size: int) -> Image.Image:
@@ -41,7 +44,10 @@ def main() -> None:
     for size in SIZES:
         path = OUT_DIR / f"icon{size}.png"
         draw(size).save(path, optimize=True)
-        print(f"wrote {path.relative_to(OUT_DIR.parent.parent)}")
+        print(f"wrote {path.relative_to(ROOT)}")
+    STORE_LOGO.parent.mkdir(parents=True, exist_ok=True)
+    draw(300).save(STORE_LOGO, optimize=True)
+    print(f"wrote {STORE_LOGO.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

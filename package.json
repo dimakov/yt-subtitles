@@ -7,6 +7,7 @@
   "scripts": {
     "test": "node --test",
     "icons": "python3 scripts/make_icons.py",
-    "package": "python3 scripts/package.py"
+    "package": "python3 scripts/package.py",
+    "store-images": "node scripts/capture_store_images.mjs"
   }
 }

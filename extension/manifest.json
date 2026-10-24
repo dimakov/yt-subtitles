@@ -1,8 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Subtitle Downloader for YouTube",
-  "short_name": "Subtitle Downloader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Download YouTube subtitles and auto-generated captions as SRT, VTT, TXT or JSON, optionally auto-translated.",
   "minimum_chrome_version": "111",
   "icons": {

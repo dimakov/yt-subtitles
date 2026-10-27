@@ -1,0 +1,29 @@
+# Runs the tests and builds the store package for every push to main and
+# every pull request. The built zip is kept as a run artifact for 14 days.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Unit and manifest tests
+        run: node --test
+      - name: Build the store package
+        run: python3 scripts/package.py
+      - uses: actions/upload-artifact@v7
+        with:
+          name: extension-package
+          path: dist/*.zip
+          retention-days: 14

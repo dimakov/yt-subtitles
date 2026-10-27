@@ -68,6 +68,10 @@ docs/hld/             design documentation
 ```
 
 - `npm test` runs the unit tests (Node 20 or newer; no dependencies).
+- CI ([.github/workflows/ci.yml](.github/workflows/ci.yml)) runs the same
+  tests and builds the store zip on every push to `main` and every pull
+  request. The zip is attached to each run as the `extension-package`
+  artifact.
 - After editing popup or library code, reopen the popup. After editing
   `page/page-api.js` or the manifest, click **Reload** on `edge://extensions`
   and reload the YouTube tab.
@@ -91,6 +95,22 @@ docs/hld/             design documentation
     Windows Node 22+ with Edge installed. It renders the real popup with the
     invented demo data in `store/src/`, in a throwaway headless Edge profile
     with sync turned off.
+
+## Releasing
+
+1. Bump `version` in both `extension/manifest.json` and `package.json`. A
+   test fails if they differ.
+2. Add a `## [x.y.z] - YYYY-MM-DD` section to [CHANGELOG.md](CHANGELOG.md).
+3. Commit, push, and wait for CI to pass.
+4. Tag and push: `git tag vX.Y.Z && git push origin vX.Y.Z`. The
+   [Release workflow](.github/workflows/release.yml) then:
+   - checks that the tag matches the manifest version;
+   - reruns the tests and builds the zip;
+   - publishes a GitHub release with the zip attached and the changelog
+     section as notes.
+5. Download the zip from the release, upload it in Partner Center
+   (**Packages**), and paste the changelog section into **Notes for
+   certification**.
 
 ## Limitations
 

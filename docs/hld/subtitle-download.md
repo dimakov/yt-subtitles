@@ -129,7 +129,14 @@ wrapped in try/catch. No subtitle data or video history is stored.
     player, CC button, PerformanceObserver and `fetch`. It covers track mapping,
     token merging, strategy order, cookie modes, CC restoration (on and off),
     429 reporting and the stale-video guard.
+  - `tests/manifest.test.js`: store limits (version format and match with
+    `package.json`, name/short_name/description lengths) and that every file
+    the manifest references exists.
 - Fixtures are synthetic, modelled on real json3 structure.
+- GitHub Actions: `ci.yml` runs the suite and builds the zip on each push and
+  pull request. `release.yml` runs on `v*` tags: it checks the tag against the
+  manifest version and publishes a release with the zip and the
+  `CHANGELOG.md` section (extracted by `scripts/release_notes.py`).
 - Manual or CDP check in Edge, last run 2026-10-24 on Edge 155: load unpacked,
   open a captioned lecture, then download every format, an ASR track and two
   translations, and Copy.
